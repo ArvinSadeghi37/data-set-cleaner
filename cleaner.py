@@ -7,9 +7,9 @@ def cleanizer(chunk):
     
     link_pattern = re.compile(r"(https?://\S+|www\.\S+)")
     emoji_pattern = re.compile(
-    r'[\U00010000-\U0010ffff]'  
-    r'|[\u2300-\u27BF]'          
-    r'|[\u200d\ufe0f]')         
+    r'[\U00010000-\U0010ffff]' 
+    r'|[\u2300-\u2BFF]'          
+    r'|[\u200d\ufe0f]')        
     hashtag_icon_pattern = re.compile(r"#")
     hashtag_endoftweet_pattern = re.compile(r"(\s#\w+)*$")
     retweet_patter = re.compile(r"^RT\s:\s")
@@ -33,5 +33,7 @@ def cleanizer(chunk):
     # delete retweet re : 
     chunk[1] = chunk[1].str.replace(retweet_patter , "" ,  regex=True)
     
+    #clean unlikely charachters
+    chunk[1] = chunk[1].str.replace(r'[\u200e\u200f\u202a-\u202e\u2066-\u2069]', '', regex=True)
     
     return chunk[1]
