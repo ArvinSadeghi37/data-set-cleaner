@@ -35,5 +35,9 @@ def cleanizer(chunk):
     
     #clean unlikely charachters
     chunk[1] = chunk[1].str.replace(r'[\u200e\u200f\u202a-\u202e\u2066-\u2069]', '', regex=True)
+
+    #clean lines which newly got empty
+    chunk = chunk.dropna()
+    chunk[1] = chunk[1].str.replace("\n", " ", regex=False)
     
     return chunk[1]

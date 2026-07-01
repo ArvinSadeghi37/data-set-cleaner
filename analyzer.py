@@ -1,32 +1,33 @@
 import pandas as pa
 import re
-def analyze_data(data):
+def analyze_data(data ,  text_line):
     print("working for a report of data...")
     total_rows = 0
     empty_rows = 0
     max_line = 0 
-    min_line = 0
-    short_twittes = 0
+    min_line = float("inf")
     link_count = 0
     retweet_count = 0
     
     for chunk in data:
-        total_rows += len(chunk)
-        empty_rows += (chunk[1].str.strip()== "").sum()
-
-        lenth = chunk[1].astype(str).str.len()
+        #count all lines and empty lines
+        total_rows += len(chunk[text_line])
+        empty_rows += (chunk[text_line].str.strip()== "").sum()
+        #count line sizes
+        lenth = chunk[text_line].astype(str).str.len()
         biggest_line = lenth.max()
         smallest_line = lenth.min()
-        
         max_line = max(biggest_line , max_line)
+        
+        
         min_line = min(smallest_line , min_line)
 
-        short_twittes += (lenth < 5 ).sum()
+        #count linked lines
+        link_count += chunk[text_line].str.contains(r"https?://|www\.", na=False).sum()
 
-        link_count += chunk[1].str.contains(r"https?://|www\.", na=False).sum()
-    return {"total_rows" : total_rows ,
-            "empty_rows" : empty_rows ,
-            "biggest_row": max_line   ,
-            "smallest_row": min_line   , 
+    return {"total_tweets" : total_rows ,
+            "empty_tweets" : empty_rows ,
+            "biggest_tweet": max_line   ,
+            "smallest_tweet": min_line   , 
             "linked_twittes": link_count
             }
