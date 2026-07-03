@@ -1,7 +1,7 @@
 import pandas as pa
 import hazm 
 import re
-import emoji
+
 
 def cleanizer(chunk):
     
