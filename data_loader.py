@@ -1,5 +1,4 @@
 import pandas as pa
-import time
 def load_data(path):
     chunksize = 200000
     print("started to read")
