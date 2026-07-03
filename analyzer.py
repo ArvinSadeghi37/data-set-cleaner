@@ -5,7 +5,7 @@ def analyze_data(data ,  text_line):
     total_rows = 0
     empty_rows = 0
     max_line = 0 
-    min_line = float("inf")
+    min_line = 1500000000000
     link_count = 0
     retweet_count = 0
     
